@@ -1,23 +1,41 @@
 # Computer View
 
-Owner-scoped, passwordless access to an existing agent desktop from a browser. Computer View gates noVNC assets and a WebSocket-to-RFB bridge behind single-use links. Telegram delivery and a Cloudflare Quick Tunnel are optional adapters.
+**Self-hosted, passwordless browser access to your existing Linux desktop.**
 
-**Linux alpha (0.1.0).** This is not a complete desktop-provisioning product. It does not install a desktop, Chromium, X server, or VNC server. Human and agent input are uncoordinated; do not type simultaneously. Audio is not forwarded. The repository is not evidence that this package is deployed in a live production environment.
+Computer View gives an owner access to a remote desktop through noVNC and a WebSocket-to-RFB bridge. Single-use links gate access; private Telegram delivery and a Cloudflare Quick Tunnel are optional.
+
+[Quick start](#quick-start) · [Architecture](#architecture-and-prerequisites) · [Security](#access-model-and-limitations) · [Troubleshooting](docs/troubleshooting.md) · [Contributing](CONTRIBUTING.md)
+
+**Linux alpha (0.1.0)** · Python 3.11+ · [MIT license](LICENSE)
+
+![Illustration of a browser window displaying a desktop, connected to a key and lock](docs/assets/computer-view-hero.webp)
+
+> Computer View connects to an **existing** desktop and private RFB socket. It does not install a desktop, Chromium, an X server, or a VNC server.
+
+## How it works
+
+- **Open from a browser:** noVNC connects to your existing desktop through an authenticated gateway.
+- **Share an owner-scoped link:** a short-lived, single-use capability is exchanged for a browser session. Anyone holding the link can redeem it.
+- **Choose your HTTPS route:** use your own reverse proxy or the optional Cloudflare Quick Tunnel.
+- **Deliver privately:** optionally send links to your verified private Telegram chat.
+
+Human and agent input are uncoordinated; do not type simultaneously. Audio is not forwarded. This repository is not evidence of a live production deployment.
 
 ## Architecture and prerequisites
 
-```text
-Owner CLI / verified private Telegram DM -> mint single-use capability
-Browser -> HTTPS reverse proxy / optional Quick Tunnel
-        -> private HTTP Unix socket -> authenticated gateway
-        -> private raw RFB Unix socket -> your existing desktop
+```mermaid
+flowchart LR
+    Owner["Owner CLI or verified private Telegram DM"] -->|Mint single-use link| Browser
+    Browser -->|HTTPS| Proxy["HTTPS proxy or optional Quick Tunnel"]
+    Proxy -->|Private HTTP Unix socket| Gateway["Authenticated gateway / noVNC"]
+    Gateway -->|Private raw RFB Unix socket| Desktop["Existing desktop"]
 ```
 
 Use Linux, Python 3.11+, an existing **raw RFB Unix socket** accessible only to the configured Unix owner, and an HTTPS reverse proxy that supports WebSockets and Unix upstream sockets. An upstream requiring a separate VNC password will still prompt for it; for passwordless viewing, configure the existing RFB service to rely on its private, owner-only Unix socket rather than expose unauthenticated TCP. Never expose RFB, CDP, or the gateway directly to the Internet. Install `cloudflared` separately only if using the optional tunnel. noVNC is fetched separately, pinned and checksum-verified.
 
 The terminal, browser, and desktop may be in different host/container namespaces. Run these commands where the package, HTTP socket, and RFB socket are reachable under the **actual configured owner's UID**. Do not assume an agent's Docker terminal is the host. See [troubleshooting](docs/troubleshooting.md).
 
-## Quickstart from a source checkout
+## Quick start
 
 Run from the checkout as the intended non-root desktop owner. No service installation or public publishing is performed by these commands.
 
