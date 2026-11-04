@@ -1,0 +1,15 @@
+[Unit]
+Description=Computer View optional Quick Tunnel
+Requires=computer-view.service
+After=computer-view.service network.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/computer-view tunnel
+UMask=0077
+NoNewPrivileges=true
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

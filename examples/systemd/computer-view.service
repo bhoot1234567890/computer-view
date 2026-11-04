@@ -1,0 +1,14 @@
+[Unit]
+Description=Computer View private desktop gateway
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/computer-view serve
+UMask=0077
+NoNewPrivileges=true
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target
