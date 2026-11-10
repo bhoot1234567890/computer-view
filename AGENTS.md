@@ -16,6 +16,7 @@ Computer View provides owner-scoped, passwordless browser access to an existing 
 - `src/computer_view/` — CLI, gateway, persistence, configuration, and optional adapters.
 - `tests/` — isolated unittest coverage, including an in-process gateway and Unix-socket RFB fixture.
 - `docs/`, `examples/systemd/`, `integrations/hermes/` — troubleshooting, adaptable user services, and the portable Hermes skill.
+- `integrations/hermes-native/` — separate native Hermes plugin candidate, with its own service package, pytest suite and security documentation. Use a separate virtualenv; its `computer_view` package must not be installed alongside the root application. CI is `.github/workflows/hermes-plugin.yml`.
 
 ## Development Commands
 

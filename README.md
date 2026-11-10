@@ -12,6 +12,29 @@ Computer View gives an owner access to a remote desktop through noVNC and a WebS
 
 > Computer View connects to an **existing** desktop and private RFB socket. It does not install a desktop, Chromium, an X server, or a VNC server.
 
+## Native Hermes plugin — hackathon candidate
+
+The native integration lives in [`integrations/hermes-native`](integrations/hermes-native).
+It adds five Hermes tools, profile-scoped private Telegram delivery, a mobile
+watch/takeover/handback viewer, and cooperative fencing of supported Hermes screen
+tools. It is a separate implementation from the standalone application below;
+the standalone gateway still does not coordinate human and agent input.
+
+- [Native plugin installation and boundaries](integrations/hermes-native/README.md)
+- [Persistent Chromium certificate trust for Docker/proxy deployments](integrations/hermes-native/docs/CHROMIUM_TRUST.md)
+- [Native plugin release and demonstration gates](integrations/hermes-native/RELEASE_CHECKLIST.md)
+
+Use a separate virtualenv for the native service: both implementations provide
+a `computer_view` Python package and a `computer-view` executable, so do not
+install them into the same environment. For the native plugin, change directory
+to `integrations/hermes-native` before following its setup commands. Its source
+entrypoint is that directory's `plugin.yaml` and `__init__.py`, not the root
+standalone package or the older portable skill in `integrations/hermes`.
+
+The candidate is not yet a catalog-listed plugin or a completed hackathon entry.
+Its CI runs separately from the existing standalone tests. No deployment-specific
+trust databases, credentials, access links, or owner settings are shipped.
+
 ## How it works
 
 - **Open from a browser:** noVNC connects to your existing desktop through an authenticated gateway.

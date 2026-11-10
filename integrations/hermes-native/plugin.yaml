@@ -1,0 +1,27 @@
+name: computer-view
+label: Computer View
+version: 0.1.0
+author: Computer View contributors
+kind: standalone
+requires_hermes: ">=0.22.6"
+provides_middleware:
+  - tool_execution
+description: >-
+  Private profile-scoped Computer View and user takeover. Network access:
+  api.telegram.org for verified private getChat/sendMessage delivery, configured
+  HTTPS viewer origin, local loopback gateway and desktop Unix socket. Filesystem:
+  this profile's plugin-data/computer-view runtime directory and explicitly
+  configured read-only noVNC assets. No process starts on registration or tool
+  calls; optional server/desktop process lifecycle requires explicit local operator
+  action. Uses the profile-scoped Telegram secret getter, never direct auth files.
+  Middleware fences browser_exec, computer_use and browser_vault including reads
+  only in explicitly configured in_process mode. This is cooperative dispatch
+  coordination, not a same-UID or all-process security boundary.
+provides_tools:
+  - computer_view_open
+  - computer_view_status
+  - computer_view_revoke
+  - computer_view_handoff
+  - computer_view_observe
+provides_hooks: []
+capabilities: []
