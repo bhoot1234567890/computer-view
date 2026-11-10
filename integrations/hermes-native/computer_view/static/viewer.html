@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<title>Computer View · Hermes</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%2310110f'/%3E%3Ctext x='16' y='24' text-anchor='middle' font-family='monospace' font-size='24' fill='%23f5c36b'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/viewer.css">
+<script type="module" src="/static/viewer-loader.js"></script>
+</head>
+<body>
+<div class="app">
+<header class="masthead"><a class="brand" href="/desktop" aria-label="Hermes Computer View"><span class="brand-mark" aria-hidden="true">H</span> HERMES <span class="brand-divider">/</span> <span class="brand-section">Computer View</span></a><span class="transport">COOKIE-AUTHENTICATED SESSION</span></header>
+<main>
+<section class="title-row" aria-labelledby="title"><div><p class="eyebrow">YOUR AGENT, IN VIEW</p><h1 id="title">A window into the work.</h1><p class="subtitle">Watch the desktop. Step in when you need to.</p></div><div class="live-badge"><span class="dot" aria-hidden="true"></span><span id="connection" role="status">Connecting…</span></div></section>
+<section class="workspace" aria-label="Remote desktop viewer">
+<div class="workspace-bar"><span>DESKTOP <span class="subtle">/ LIVE STREAM</span></span><span id="mode" role="status">Watch only</span></div>
+<div class="screen-wrap"><div id="desktop" tabindex="0" aria-label="Remote desktop. Keyboard and pointer enabled only when you hold control."></div><div id="screen-placeholder" class="screen-placeholder"><span class="screen-symbol" aria-hidden="true">▣</span><strong id="screen-message">Connecting to your desktop</strong><span>No desktop frames received yet.</span></div></div>
+<div class="workspace-footer"><span id="lease">Checking session…</span><label class="fit-label"><input id="fit" type="checkbox" checked> Fit to screen</label></div>
+</section>
+<section class="control-panel" aria-label="Session controls"><div class="control-copy"><span class="eyebrow">CONTROL IS EXPLICIT</span><p id="control-description">You start in watch-only mode.</p></div><div class="control-actions"><button id="takeover" class="primary" disabled>Take control <span aria-hidden="true">↗</span></button><button id="handback" disabled>Hand back to agent</button><button id="disconnect" class="quiet">Disconnect</button></div></section>
+<p id="notice" class="notice" role="status" aria-live="polite">Waiting for session status. Input stays disabled until control is confirmed.</p>
+<div class="lower-grid"><section class="tools" aria-label="Desktop input"><h2>Input tools</h2><p>Use your pointer or touch directly on the desktop.</p><div class="key-actions"><button id="keyboard" disabled>Keyboard</button><button id="key-tab" disabled>Tab</button><button id="key-escape" disabled>Esc</button><button id="key-enter" disabled>Enter</button><button id="key-backspace" disabled>⌫ <span class="sr-only">Backspace</span></button></div><div id="keyboard-panel" hidden><label for="keyboard-input">Type to the remote desktop</label><input id="keyboard-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="text" aria-describedby="keyboard-help" disabled><small id="keyboard-help">Text is sent immediately while you hold control. Do not enter credentials here.</small></div></section><section class="activity"><h2>Session activity</h2><ol id="events"><li>Waiting for session activity.</li></ol></section></div>
+<details class="help"><summary>How control and session access work</summary><div><p>Supported Hermes input is fenced while your human-control lease is active. Hand back explicitly when finished. Disconnect closes only this viewer; it does not silently return control or revoke other viewers.</p><p>Direct shell commands and same-user scripts are outside this boundary. This is not privacy isolation from other processes running as the same user.</p><p>To revoke all access, ask the owner to use the Computer View revoke tool in Hermes. This viewer cannot revoke all sessions. Session expiry and owner revocation are enforced by the server.</p><p>Pointer, touch, and physical keyboard input are handled by noVNC. Input tools are available only while this viewer holds control. Browser credential prompts are not supported; authentication must be configured by the owner.</p></div></details>
+</main><footer class="page-footer"><span>HERMES <span class="subtle">COMPUTER VIEW</span></span><span>Watch first. Control deliberately.</span></footer>
+</div>
+</body></html>
